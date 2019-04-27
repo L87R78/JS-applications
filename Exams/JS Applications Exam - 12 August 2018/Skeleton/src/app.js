@@ -1,0 +1,7 @@
+$(() => {
+    showHideLinks();
+    attachLinkEvents();
+    attachButtonEvents();
+    clickEventOnMessage()
+});
+

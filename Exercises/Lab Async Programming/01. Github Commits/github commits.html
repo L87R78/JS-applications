@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Github Commits</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+GitHub username:
+<input type="text" id="username" value="nakov" /> <br>
+Repo: <input type="text" id="repo" value="nakov.io.cin" />
+<input onclick="loadCommits()" type="submit" class="btn btn-info" value="Load Commits">
+<ul id="commits"></ul>
+<script>
+    function loadCommits() {
+       let userName = $('#username').val();
+       let repo = $('#repo').val();
+
+       let url = `https://api.github.com/repos/${userName}/${repo}/commits`;
+       
+       $.ajax({
+           method: 'GET',
+           url
+       }).then(function (com) {
+           $("#commits").empty();
+           for (let comElement of com) {
+               let li = $(`<li>${comElement.commit.author.name}: ${comElement.commit.message}</li>`);
+               $("#commits").append(li)
+           }
+       }).catch(function (com) {
+           $("#commits").empty();
+
+           let li = $(`<li>Error: ${com.status} (${com.statusText})</li>`);
+               $("#commits").append(li)
+       })
+        $('#username').val("");
+        $('#repo').val("");
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bus Stop</title>
+    <style>
+        #stopName {
+            font-size: 1.5em;
+            font-weight: 400;
+            padding: 0.25em;
+            background-color: aquamarine;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div id="stopInfo" style="width:20em">
+    <div>
+        <label for="stopId">Stop ID: </label>
+        <input id="stopId" type="text">
+        <input id="submit" type="button" value="Check" onclick="getInfo()"></div>
+    <div id="result">
+        <div id="stopName"></div>
+        <ul id="buses"></ul>
+    </div>
+</div>
+<script>
+    function getInfo() {
+        const STOPID = $('#stopId').val();
+        $('#stopName').empty();
+        $('#buses').empty();
+
+        if(STOPID === "1308" || STOPID === "1287" || STOPID === "1327" || STOPID === "2334"){
+            const BASE_URL = `https://judgetests.firebaseio.com/businfo/${STOPID}`;
+            $('#submit').on('click', createStops())
+
+            function createStops() {
+                $.ajax({
+                    method: 'GET',
+                    url: BASE_URL + '.json'
+                }).then(appendBusesStops)
+                    .catch(handleEtror)
+
+            }
+
+            function appendBusesStops(busesItem) {
+
+                let stops = busesItem['buses'];
+                let nameStop = busesItem['name'];
+                $('#stopName').append(nameStop);
+                for (const id in stops) {
+                    let li = $(`<li>Bus ${id} arrives in ${stops[id]} minutes</li>`);
+                    $('#buses').append(li)
+                }
+            }
+            function handleEtror(error) {
+                console.error(error)
+            }
+        }else{
+
+            $('#stopName').text("Error")
+        }
+        $('#stopId').val("")
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+function attachEvents() {
+    alert("sasaa")
+}

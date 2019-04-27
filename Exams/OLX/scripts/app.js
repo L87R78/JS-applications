@@ -1,0 +1,6 @@
+$(() => {
+    showHideLinks();
+    attachLinkEvents();
+    attachButtonEvents();
+    attachBoxesEvents();
+});
