@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <title>Document</title>
+</head>
+<body>
+        <h2>hello word</h2>
+
+        <button onclick="loadHTML()">Load HTML</button>
+        <div id="result"></div>
+</body>
+
+<script>
+    function loadHTML(){
+        //$('#result').load('http://localhost:3003/text.html')
+
+        let url = 'https://swapi.co/api/people/1'
+
+        $.ajax({
+            method: "GET",
+            url, 
+        }).then(function (data){
+                $('#result').append(`<p>${data.name}</p>`)
+        })
+    }
+</script>
+</html>
